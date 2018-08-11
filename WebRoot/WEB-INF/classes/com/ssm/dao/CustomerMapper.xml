@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.ICustomerDao">
+	
+	<resultMap type="com.ssm.common.bean.Customer" id="Customer">
+		<id property="id" column="customer_id"/>
+		<result property="name" column="customer_name"/>
+		<result property="password" column="customer_password"/>
+		<result property="zip" column="customer_zip"/>
+		<result property="address" column="customer_address"/>
+		<result property="telephone" column="customer_telephone"/>
+		<result property="email" column="customer_email"/>
+	</resultMap>
+	
+	<select id="findByName" parameterType="String" resultMap="Customer">
+		select * from t_customer where customer_name=#{userid}
+	</select>
+
+	<insert id="saveCustomer" parameterType="com.ssm.common.bean.Customer">
+		<selectKey keyColumn="customer_id" keyProperty="id" 
+				resultType="long" order="BEFORE">
+			select seq_t_customer.nextval from dual
+		</selectKey>
+		insert into t_customer values(
+			#{id},
+			#{name},
+			#{password},
+			#{zip},
+			#{address},
+			#{telephone},
+			#{email})
+	</insert>
+
+	<update id="updateCustomer" parameterType="com.ssm.common.bean.Customer">
+		update t_customer set
+		<if test="name!=null">customer_name=#{name},</if>
+		<if test="password!=null">customer_password=#{password},</if>
+		<if test="zip!=null">customer_zip=#{zip},</if>
+		<if test="address!=null">customer_address=#{address},</if>
+		<if test="telephone!=null">customer_telephone=#{telephone},</if>
+		<if test="email!=null">customer_email=#{email}</if>
+		 where customer_id=#{id}
+	
+	</update>
+</mapper>			

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.IBookDao">
+
+	<resultMap type="com.ssm.common.bean.Book" id="Book">
+		<id property="id" column="book_id"/>
+		<result property="name" column="book_name"/>
+		<result property="price" column="book_price"/>
+	</resultMap>
+	<select id="selectAll" resultMap="Book">
+		select * from t_book 
+	</select>
+</mapper>
